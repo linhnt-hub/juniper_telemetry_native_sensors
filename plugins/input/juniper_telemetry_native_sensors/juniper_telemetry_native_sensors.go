@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/influxdata/telegraf"
-	"github.com/influxdata/telegraf/internal"
+	// "github.com/influxdata/telegraf/internal"
 	"github.com/influxdata/telegraf/plugins/common/socket"
 	"github.com/influxdata/telegraf/plugins/inputs"
 )
@@ -60,7 +60,8 @@ func (sl *SocketListener) Start(acc telegraf.Accumulator) error {
 
 		if len(metrics) == 0 {
 			once.Do(func() {
-				sl.Log.Debug(internal.NoMetricsCreatedMsg)
+				// sl.Log.Debug(internal.NoMetricsCreatedMsg)
+				sl.Log.Debug("internal.NoMetricsCreatedMsg")
 			})
 		}
 

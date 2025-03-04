@@ -7,7 +7,7 @@ import (
 	"time"
 
 	// TODO: import your plugins
-	_ "github.com/ssoroka/rand/plugins/inputs/rand"
+	_ "github.com/linhnt-hub/juniper_telemetry_native_sensors/plugins/input/juniper_telemetry_native_sensors"
 
 	"github.com/influxdata/telegraf/plugins/common/shim"
 )
