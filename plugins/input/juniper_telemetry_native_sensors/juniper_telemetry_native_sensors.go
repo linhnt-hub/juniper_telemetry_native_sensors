@@ -7,7 +7,7 @@ import (
 	"net"
 	"sync"
 	"time"
-
+	"fmt"
 	"github.com/influxdata/telegraf"
 	// "github.com/influxdata/telegraf/internal"
 	"github.com/influxdata/telegraf/plugins/common/socket"
@@ -39,6 +39,12 @@ func (sl *SocketListener) SetParser(parser telegraf.Parser) {
 }
 
 func (sl *SocketListener) Init() error {
+    if sl.ServiceAddress == "" {
+        sl.Log.Error("ServiceAddress is empty")
+        return fmt.Errorf("ServiceAddress is empty")
+    }
+
+    sl.Log.Infof("Initializing socket with ServiceAddress: %s", sl.ServiceAddress)
 	sock, err := sl.Config.NewSocket(sl.ServiceAddress, &sl.SplitConfig, sl.Log)
 	if err != nil {
 		return err
