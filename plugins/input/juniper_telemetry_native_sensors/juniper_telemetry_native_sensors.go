@@ -19,7 +19,7 @@ var sampleConfig string
 
 var once sync.Once
 
-type SocketListener struct {
+type juniper_telemetry_native_sensors struct {
 	ServiceAddress string          `toml:"service_address"`
 	TimeSource     string          `toml:"time_source"`
 	Log            telegraf.Logger `toml:"-"`
@@ -30,15 +30,15 @@ type SocketListener struct {
 	parser telegraf.Parser
 }
 
-func (*SocketListener) SampleConfig() string {
+func (*juniper_telemetry_native_sensors) SampleConfig() string {
 	return sampleConfig
 }
 
-func (sl *SocketListener) SetParser(parser telegraf.Parser) {
+func (sl *juniper_telemetry_native_sensors) SetParser(parser telegraf.Parser) {
 	sl.parser = parser
 }
 
-func (sl *SocketListener) Init() error {
+func (sl *juniper_telemetry_native_sensors) Init() error {
     if sl.ServiceAddress == "" {
         sl.Log.Error("ServiceAddress is empty")
         return fmt.Errorf("ServiceAddress is empty")
@@ -54,7 +54,7 @@ func (sl *SocketListener) Init() error {
 	return nil
 }
 
-func (sl *SocketListener) Start(acc telegraf.Accumulator) error {
+func (sl *juniper_telemetry_native_sensors) Start(acc telegraf.Accumulator) error {
 	// Create the callbacks for parsing the data and recording issues
 	onData := func(_ net.Addr, data []byte, receiveTime time.Time) {
 		metrics, err := sl.parser.Parse(data)
@@ -96,18 +96,18 @@ func (sl *SocketListener) Start(acc telegraf.Accumulator) error {
 	return nil
 }
 
-func (*SocketListener) Gather(telegraf.Accumulator) error {
+func (*juniper_telemetry_native_sensors) Gather(telegraf.Accumulator) error {
 	return nil
 }
 
-func (sl *SocketListener) Stop() {
+func (sl *juniper_telemetry_native_sensors) Stop() {
 	if sl.socket != nil {
 		sl.socket.Close()
 	}
 }
 
 func init() {
-	inputs.Add("socket_listener", func() telegraf.Input {
-		return &SocketListener{}
+	inputs.Add("juniper_telemetry_native_sensors", func() telegraf.Input {
+		return &juniper_telemetry_native_sensors{}
 	})
 }
